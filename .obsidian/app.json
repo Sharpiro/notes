@@ -1,3 +1,6 @@
 {
-  "vimMode": false
+  "vimMode": false,
+  "useTab": false,
+  "tabSize": 4,
+  "showInlineTitle": true
 }

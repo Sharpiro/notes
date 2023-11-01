@@ -2,8 +2,8 @@
 
 ```asm
 section .data
-	msg db `Hello, World!\n`
-	msg_len equ $ - msg
+    msg db `Hello, World!\n`
+    msg_len equ $ - msg
 ```
 
 ## `jmp`
@@ -25,6 +25,7 @@ Will jump to instruction at the dereference of `rsp+0x8` as expected
 ```asm
 jmp    QWORD PTR [rsp+0x8]
 ```
+
 ### jmp - rip relative
 
 seems to always be off by 6, implying the `rip` register is being incremented earlier than even gdb says.

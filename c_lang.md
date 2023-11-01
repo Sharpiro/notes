@@ -2,16 +2,15 @@
 
 ```c
 int main() {
-	printf("hi hi\n");
+    printf("hi hi\n");
 }
 ```
-
 
 ## mmap for executable memory
 
 ```c
 void *buffer = mmap(NULL, size, PROT_READ | PROT_WRITE | PROT_EXEC,
-	MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 ```
 
 ## view memory maps

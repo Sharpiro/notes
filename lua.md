@@ -36,4 +36,3 @@ function emu.read8(self, number)
 end
 
 ```
-

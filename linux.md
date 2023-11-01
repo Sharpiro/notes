@@ -1,0 +1,15 @@
+## desktop shortcut
+
+```sh
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Name=Screen Locker
+Comment=Lock your screen
+Exec=/usr/lib/kscreenlocker_greet --immediateLock
+Terminal=false
+Type=Application
+Icon=emblem-locked
+Categories=GNOME;System;
+StartupNotify=false
+```

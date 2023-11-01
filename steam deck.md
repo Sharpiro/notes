@@ -1,5 +1,8 @@
+## shortcuts
 
-## lock screen shortcut
+- [[linux#desktop shortcut]]
+
+### lock screen shortcut
 
 ```sh
 #!/usr/bin/env xdg-open
@@ -15,13 +18,7 @@ Categories=GNOME;System;
 StartupNotify=false
 ```
 
-## firefox won't save
-  
-```
-systemctl restart --user xdg-desktop-portal
-```
-
-## desktop shortcut to script
+### script shortcut
 
 ```sh
 [Desktop Entry]
@@ -33,7 +30,15 @@ Terminal=true
 Type=Application
 ```
 
+## firefox won't save
+  
+```sh
+systemctl restart --user xdg-desktop-portal
+```
+
 ## sync files
+
+- [[bash#if statement|bash if statement]]
 
 ```sh
 #! /bin/bash
@@ -43,10 +48,10 @@ echo syncing...
 echo downloading huge files, this could take a while...
 scp pi@192.168.1.222:/home/pi/roms/gba/* /run/media/mmcblk0p1/Emulation/roms/gba
 if [[ $? == 0 ]]; then
-	echo -----SUCCESS-----
-	sha1sum /run/media/mmcblk0p1/Emulation/roms/gba/*
+  echo -----SUCCESS-----
+  sha1sum /run/media/mmcblk0p1/Emulation/roms/gba/*
 else
-	echo -----FAILURE-----
+  echo -----FAILURE-----
 fi
 sleep 10
 ```
