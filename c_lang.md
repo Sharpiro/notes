@@ -1,3 +1,24 @@
+
+## read from stdin/file
+
+- `fgets` replaces `gets` as the secure way to read text from `stdin`
+
+```c
+char user_input[500] = {};
+fgets(user_input, 25, stdin);
+```
+
+## open file
+
+- `fopen` is still standard
+- `fopen_s` is new in c11 but is not widely available
+
+```c
+  // fopen
+  FILE *file = fopen("test_input.txt", "r");
+  // fopen_s
+  errno_t err = fopen_s(&file, "example.txt", "r");
+```
 ## printf
 
 ```c
@@ -67,4 +88,59 @@ relocating `.interp` section seems to affect the whole program's offset
 gcc -Wall -g -o test.exe \
 -Wl,--section-start=.interp=0x800000 \
 test_program.c
+```
+
+
+## .clang-format
+
+```yml
+BasedOnStyle: LLVM
+AllowShortFunctionsOnASingleLine: None
+AllowShortLambdasOnASingleLine: None
+```
+
+## .clangd
+
+```yaml
+CompileFlags:
+  Add:
+    - -xc++,
+    - -Wall,
+    - -D_CRT_SECURE_NO_WARNINGS,
+```
+
+## simulating closures
+
+```cpp
+
+// cpp lambda
+auto process_char = [&current_char]() {
+  printf("pc: %x\n", current_char);
+};
+```
+
+## makefile
+
+```makefile
+CC=gcc
+CFLAGS=-Wall -g -Wno-format
+TARGET=sm_hash_tool
+SRC_DIR=src
+
+all: $(TARGET)
+
+$(TARGET):  $(SRC_DIR)/*.c
+	$(CC) $(CFLAGS) $(SRC_DIR)/*.c -o $(TARGET)
+
+clean:
+	rm -f $(TARGET)
+
+```
+
+## casts
+
+### beware the cast position
+
+```c
+(uint8_t)(table_index - 1) != ((uint8_t)table_index - (uint8_t)1)
 ```
