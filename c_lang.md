@@ -24,6 +24,7 @@ fgets(user_input, 25, stdin);
 ```c
 int main() {
     printf("hi hi\n");
+    fprintf(stderr, "err: expected file\n");
 }
 ```
 
@@ -93,6 +94,8 @@ test_program.c
 
 ## .clang-format
 
+- `// clang-format off/on`
+
 ```yml
 BasedOnStyle: LLVM
 AllowShortFunctionsOnASingleLine: None
@@ -142,5 +145,6 @@ clean:
 ### beware the cast position
 
 ```c
-(uint8_t)(table_index - 1) != ((uint8_t)table_index - (uint8_t)1)
+char my_char = '/'
+(uint8_t)(my_char - 1) != ((uint8_t)my_char - (uint8_t)1)
 ```
