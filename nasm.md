@@ -1,3 +1,11 @@
+## instruction overview
+
+```asm
+push 0x3938 ; push 8 byte value onto stack
+push word 0x3938 ; push 2 byte value onto stack (no push byte & dword is still 8 bytes)
+push r8w ; push 2 byte word from r8 onto stack
+```
+
 ## string and length
 
 ```asm
