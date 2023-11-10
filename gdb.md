@@ -30,3 +30,10 @@ x/1bs 0xdeadbeef
 ```sh
 info proc mappings # i proc m
 ```
+
+## gdb dashboard memory watch expression
+
+```sh
+dash m w $rsp+8 64 # whitespace is significant in an expression
+dash m w *(long*)($rsp+8) 64
+```

@@ -104,8 +104,14 @@ AllowShortLambdasOnASingleLine: None
 
 ## .clangd
 
+```json
+// vscode settings.json
+"clangd.fallbackFlags": ["-Wall"]
+```
+
 ```yaml
-CompileFlags:
+// .clangd
+CompileFlags: 
   Add:
     - -xc++,
     - -Wall,
@@ -147,4 +153,39 @@ clean:
 ```c
 char my_char = '/'
 (uint8_t)(my_char - 1) != ((uint8_t)my_char - (uint8_t)1)
+```
+
+## dereference ordering
+
+```c
+// envp is incremented, original value is sent to deref operator
+char *envp[]
+printf("%s\n", *(envp++));
+```
+
+## auxiliary vector
+
+```c
+#include <elf.h>
+#include <stdio.h>
+
+int main(int argc, char *args[], char *envp[]) {
+  while (*envp++ != NULL) {
+  }
+
+  Elf64_auxv_t *auxv = (Elf64_auxv_t *)envp;
+  while (auxv->a_type != AT_NULL) {
+    printf("%p, %lu, 0x%lx\n", auxv, auxv->a_type, auxv->a_un.a_val);
+    auxv++;
+  }
+}
+
+```
+
+## include math
+
+for some reason clang doesn't link with math standard library by default
+
+```sh
+clang -lm main main.c
 ```

@@ -43,3 +43,34 @@ gdb when at this instruction evaluates `rip+0x2fe2` to be `0x404012`, 6 bytes sh
 ```asm
 jmp    QWORD PTR [rip+0x2fe2] # 0x404018 <printf@got.plt>
 ```
+
+## compare and jump
+
+`cmp` seems better to use that `test` since `test` does bitwise compares
+
+```asm
+    mov r9b, [rsi + r8]
+    cmp r9b, 0x00
+    jne seek_char ; jne == jnz
+```
+
+## labels
+
+```asm
+puts_func: ; global label
+    mov rax, SYS_WRITE
+.seek_char: ; local label
+    add r8, 1
+%endmacro
+```
+
+## Caller vs Callee registers
+
+- Caller Registers (volatile)
+    - caller must preserve these registers if used
+    - r8 - r11
+    - ..more
+- Callee registers (non-volatile)
+    - callee must preserve these registers if used
+    - r12 - r15
+    - ..more
