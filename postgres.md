@@ -1,12 +1,11 @@
-
 ## regex
 
 ### simple lazy eval doesn't work
 
 ```sql
 -- match to first underscore, then capture the rest
-'.*?_(.*)' -- typical regex lazy evalutation doesn't work
-'(?<=_).*' -- positive lookbehind surprisingly does
+'.*?_(.+)' -- typical regex lazy evalutation doesn't work
+'(?<=_).+' -- positive lookbehind surprisingly does
 ```
 
 ### matching in select
@@ -24,8 +23,5 @@
     - performs a concat/string join with a delimiter
     - won't filter results
 - unnest
-    - joins the array into a string with no delimter
+    - joins the array into a string with no delimiter
     - **will** filter results
-
-```sql
-```

@@ -68,9 +68,25 @@ puts_func: ; global label
 
 - Caller Registers (volatile)
     - caller must preserve these registers if used
+    - rax, rdx, rsi, rdi
     - r8 - r11
     - ..more
 - Callee registers (non-volatile)
     - callee must preserve these registers if used
+    - rbp
     - r12 - r15
     - ..more
+
+## C calling convention registers
+
+- First six integer or pointer arguments are passed in registers
+    - `RDI`, `RSI`, `RDX`, `RCX`, `R8`, `R9`
+
+## zero-extend
+
+- Moves the lower 32 bits only of `rdi` into the 32 bit register `r8d`
+- automatically zero-extends `r8d` clearing the upper 32 bits
+
+```asm
+mov r8d, edi
+```

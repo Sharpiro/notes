@@ -37,3 +37,13 @@ info proc mappings # i proc m
 dash m w $rsp+8 64 # whitespace is significant in an expression
 dash m w *(long*)($rsp+8) 64
 ```
+
+## gdb show actual `fs` register value
+
+- gdb lies and doesn't show `fs` value by default
+- value found in `fs_base` pseudo-register
+
+```sh
+set radix 16
+dash expressions watch $fs_base
+```
