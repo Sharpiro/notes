@@ -115,7 +115,9 @@ CompileFlags:
   Add:
     - -xc++,
     - -Wall,
-    - -D_CRT_SECURE_NO_WARNINGS,
+    - -D_CRT_SECURE_NO_WARNINGS
+  Remove:
+    - -Wextra
 ```
 
 ## simulating closures

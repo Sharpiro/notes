@@ -90,3 +90,17 @@ puts_func: ; global label
 ```asm
 mov r8d, edi
 ```
+
+## position independent code (-fPIC)
+
+- the `rel` keyword somehow makes this position-independent
+- can be applied to whole program or to individual commands
+- `rel` and `abs` can be used to override default setting
+
+```asm
+DEFAULT REL ; or ABS
+```
+
+```asm
+lea rsi, [rel new_line]
+```
