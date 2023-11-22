@@ -47,3 +47,10 @@ dash m w *(long*)($rsp+8) 64
 set radix 16
 dash expressions watch $fs_base
 ```
+
+## signals
+
+- `handle all ignore`
+    - prevents all signals from being sent to inferior
+- `handle all nostop noprint pass`
+    - don't stop, don't print, pass to inferior

@@ -68,7 +68,7 @@ puts_func: ; global label
 
 - Caller Registers (volatile)
     - caller must preserve these registers if used
-    - rax, rdx, rsi, rdi
+    - rax, rdi, rsi, rdx
     - r8 - r11
     - ..more
 - Callee registers (non-volatile)
