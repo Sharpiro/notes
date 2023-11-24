@@ -24,6 +24,7 @@ file main
 set sysroot /usr/arm-linux-gnueabihf/
 target remote localhost:1234
 ```
+
 ## tools
 
 - [cross-compile-ldd](https://gist.github.com/jerome-pouiller/c403786c1394f53f44a3b61214489e6f) ^cross-compile-tool
@@ -35,17 +36,18 @@ target remote localhost:1234
 - `mov` - move values into registers from immediate or other registers
 
 ```asm
-test_data:
-    .ascii "hello, sailor\n"
-test_data_len = . - test_data
+data:
+    .ascii "hello\n" // data (D) value
+data_len = . - data // absolute (A) value
 
 ...
 
-// char *data, data = 0x200a4, &data = 0x1009c, *data = 'h'
+// r1 = 0x200a4
 ldr r1, =data
-// int data_len, data_len = 14, &data_len = 0x100a0
+// r2 = 6
 ldr r2, =data_len
-// #define data_len 14, becomes immediate value
+// #define data_len 6, becomes immediate value
 mov r2, #data_len
 ```
 
+![[asm_arm_ram_view.svg]]

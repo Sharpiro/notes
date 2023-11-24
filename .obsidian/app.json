@@ -3,5 +3,6 @@
   "useTab": false,
   "tabSize": 4,
   "showInlineTitle": true,
-  "showLineNumber": true
+  "showLineNumber": true,
+  "alwaysUpdateLinks": true
 }
