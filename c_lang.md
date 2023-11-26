@@ -122,12 +122,20 @@ CompileFlags:
 
 ## simulating closures
 
-```cpp
+- a [[cpp#lambda|closure]] can be simulated using structured and pointers
 
-// cpp lambda
-auto process_char = [&current_char]() {
-  printf("pc: %x\n", current_char);
-};
+```cpp
+void modify_with_closure(TestClosure *closure) {
+  closure->result += 2;
+}
+
+int main(void) {
+  TestClosure closure = {.result = 0};
+  for (int i = 0; i < 4; i++) {
+    printf("computed: %d\n", closure.result);
+    modify_with_closure(&closure);
+  }
+}
 ```
 
 ## makefile
@@ -190,4 +198,22 @@ for some reason clang doesn't link with math standard library by default
 
 ```sh
 clang -lm main main.c
+```
+
+## clang blocks
+
+- `sudo dnf install libblocksruntime-devel`
+- `clang block.c -fblocks -lBlocksRuntime`
+
+```c
+#include <Block.h>
+
+int main(void) {
+  int x = 1;
+  int (^f)(int) = ^int(int y) {
+    return x + y;
+  };
+
+  return f(1);
+}
 ```

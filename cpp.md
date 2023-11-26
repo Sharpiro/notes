@@ -1,5 +1,4 @@
-
-## lambda
+## lambda/closure
 
 ```cpp
 // captures 'current_char' by reference so will always have the latest value
