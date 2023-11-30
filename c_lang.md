@@ -217,3 +217,15 @@ int main(void) {
   return f(1);
 }
 ```
+
+## inline asm
+
+- move variable into register
+
+```c
+uint64_t result = 0;
+// refer to by name
+asm("mov rdi, %[result]" : : [result] "r"(result));
+// refer to by position
+asm("mov rdi, %0" : : "r"(result));
+```

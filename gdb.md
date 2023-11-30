@@ -48,9 +48,26 @@ set radix 16
 dash expressions watch $fs_base
 ```
 
+- show as register in gdb dashboard
+
+```py
+# fetch_register_list:2108
+return names + ["fs_base", "gs_base", "orig_rax"]
+```
 ## signals
 
 - `handle all ignore`
     - prevents all signals from being sent to inferior
 - `handle all nostop noprint pass`
     - don't stop, don't print, pass to inferior
+
+## run command when breakpoint hit
+
+```sh
+define hook-stop
+    if $pc == (void(*)())run_asm
+        b *0x427e52
+        continue
+    end
+end
+```
