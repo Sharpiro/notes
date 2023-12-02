@@ -21,3 +21,7 @@ prctl(PR_SET_SYSCALL_USER_DISPATCH, <op>, <offset>, <length>, [selector])
 
 - `dl_iterate_phdr` - "dynamic linker iterate program headers"
     - parse ELF headers of shared objects loaded into the program
+
+## elf format
+
+- [[2023-11-30_A Whirlwind Tutorial on Creating Really Teensy ELF Executables for Linux.pdf|A Whirlwind Tutorial on Creating Really Teensy ELF Executables for Linux]]
