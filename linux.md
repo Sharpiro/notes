@@ -31,7 +31,8 @@ echo -1 | sudo tee /proc/sys/fs/binfmt_misc/windowsPE
 - permanent
 
 ```sh
-#/usr/lib/binfmt.d/wine.conf
+# /usr/lib/binfmt.d/wine.conf
+# sudo systemctl restart systemd-binfmt.service
 
 # Pre-PE Windows Executables
 #:windows:M::MZ::/usr/bin/wine:

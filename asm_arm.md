@@ -51,3 +51,29 @@ mov r2, #data_len
 ```
 
 ![[asm_arm_ram_view.svg]]
+
+## instruction format
+
+- instructions are stored as 32 bit little endian numbers in binary
+- a 32 bit instruction is parsed from least significant bit to most, 0-31, right to left
+    - helps to visual the 32 bit instruction as big endian at this point
+
+## push/pop
+
+- push/pop are really aliases for specific store/load instructions
+
+```asm
+// sub 4 from sp, store r3 at [sp]
+push {r3}    @ (str r3, [sp, #-4]!)
+// load [sp] into r2, add r4 to sp
+pop  {r2}    @ (ldr r2, [sp], #4)
+```
+
+## Caller vs Callee registers
+
+- caller
+    - r0-r3
+    - r12
+- callee
+    - r4-r11
+    - specials

@@ -74,7 +74,7 @@ int main(int argc, char **args) {
 }
 ```
 
-## statically linked c
+## statically linked libc
 
 ```sh
 sudo dnf install glibc-static
@@ -106,7 +106,8 @@ AllowShortLambdasOnASingleLine: None
 
 ```json
 // vscode settings.json
-"clangd.fallbackFlags": ["-Wall"]
+"clangd.fallbackFlags": ["-Wall"],
+"clangd.arguments": ["--function-arg-placeholders=0"],
 ```
 
 ```yaml
@@ -116,6 +117,7 @@ CompileFlags:
     - -xc++,
     - -Wall,
     - -D_CRT_SECURE_NO_WARNINGS
+    - --function-arg-placeholders=0
   Remove:
     - -Wextra
 ```
@@ -223,9 +225,25 @@ int main(void) {
 - move variable into register
 
 ```c
-uint64_t result = 0;
+uint64_t x = 0;
 // refer to by name
-asm("mov rdi, %[result]" : : [result] "r"(result));
+asm("mov rdi, %[x]" : : [x] "r"(x));
 // refer to by position
-asm("mov rdi, %0" : : "r"(result));
+asm("mov rdi, %0" : : "r"(x));
+```
+
+## misc
+
+- `-mno-sse`
+    - disable "Streaming SIMD Extensions" instructions which apparently require libc initialization
+
+## statically linked library
+
+```sh
+# create object file
+gcc -c -o file1.o file1.c
+# pack multiple object files into static lib
+ar rcs libmystatic.a file1.o file2.o
+# use static lib
+gcc -o temp temp.c libmystatic.a
 ```

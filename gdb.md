@@ -7,6 +7,11 @@ make
 sudo make install
 ```
 
+- additional raspbian steps
+    - install `libgmp-dev`
+    - install `libmpfr-dev`
+    - ensure `/usr/bin/python -> /usr/bin/python3`
+
 ## config
 
 ```sh
@@ -70,4 +75,19 @@ define hook-stop
         continue
     end
 end
+```
+
+## dynamically add symbol file
+
+```sh
+# add-symbol file <program> <.text start>
+add-symbol-file ./test_program_c_linux/test.exe 0x401000
+```
+
+## register watchpoint
+
+- break whenever register changes
+
+```sh
+watch $sp
 ```
