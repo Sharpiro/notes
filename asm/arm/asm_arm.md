@@ -77,3 +77,11 @@ pop  {r2}    @ (ldr r2, [sp], #4)
 - callee
     - r4-r11
     - specials
+
+## References
+
+- Instruction Set
+    - [[arm_iso_1.pdf]]
+    - [[arm_iso_2.pdf]]
+- [Immediate rotation](https://alisdair.mcdiarmid.org/arm-immediate-value-encoding/)
+- [CPSR Register](https://developer.arm.com/documentation/ddi0601/2023-12/AArch32-Registers/CPSR--Current-Program-Status-Register)
