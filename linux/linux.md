@@ -37,3 +37,10 @@ echo -1 | sudo tee /proc/sys/fs/binfmt_misc/windowsPE
 # Pre-PE Windows Executables
 #:windows:M::MZ::/usr/bin/wine:
 ```
+
+## raspberry pi
+
+- perf
+    - `sudo apt install linux-perf`
+- rust install 'triple'
+    - `armv7-unknown-linux-gnueabihf`

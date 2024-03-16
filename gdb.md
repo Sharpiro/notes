@@ -7,10 +7,12 @@ make
 sudo make install
 ```
 
-- additional raspbian steps
+- additional Raspbian/RPiOS steps
     - install `libgmp-dev`
     - install `libmpfr-dev`
     - ensure `/usr/bin/python -> /usr/bin/python3`
+    - On the latest Raspberry Pi OS 32 bit, gdb incorrectly detects 64 bit, so we need to force 32 in the configure script
+        - `--target="arm-unknown-linux-gnu" --build="arm-unknown-linux-gnu" --host="arm-unknown-linux-gnu"`
 
 ## config
 

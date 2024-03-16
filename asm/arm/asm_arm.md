@@ -78,6 +78,33 @@ pop  {r2}    @ (ldr r2, [sp], #4)
     - r4-r11
     - specials
 
+## PC-relative instructions
+
+- in GDB, `$pc` equals the address of the current instruction about to be executed no matter the architecture.
+- However in ARM32 under the hood, `$pc` is actually 2 instructions ahead due to pipelining
+    - Note: This is allegedly not true in ARM64, and thus would be more straightforward
+- Consider the ARM32 example `0x100a8 add r12, pc, #0`
+    - The answer seems obviously to be `$r12 = 0x100a8`
+    - However due to the "+8" from pipelining, the answer is actually `$r12 = 0x100b0`
+
+## Branching
+
+- `b` - branch to given address
+- `bx` - branch to given register, optionally switch b/w arm/thumb
+- `bl` - set `lr` to next instruction then branch to given address
+
+### Misc
+
+- A pre-indexed writeback occurs before the load is performed
+    - ex: `ldr r3, [r3, #4]!`
+    ```c
+    writeback_value = r3 + 4
+    deref_value = *(r3 + 4)
+    r3 = writeback_value // immediately overwritten
+    r3 = deref_value
+    ````
+    - this is never really done and assembler gives a warning
+
 ## References
 
 - Instruction Set
