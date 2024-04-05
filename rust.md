@@ -1,6 +1,6 @@
 ## serde
 
-## conversion from string
+### conversion from string
 
 ```rust
 struct Track {
@@ -34,3 +34,33 @@ println!("{:#04X?}", b"AZaz\0");
 
 - `extend` - less boilerplate for extension methods
 - `enum-as-inner` - get an enum variant as an `Option<T>` or `Result<T>`, etc.
+
+# Clap
+
+### Example Args
+
+```rust
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
+struct Args {
+    /// Pattern
+    #[arg(index = 2)]
+    pattern: String,
+    /// File
+    #[arg(index = 1)]
+    file: String,
+    /// Number of times to greet
+    #[arg(long, default_value_t = 1)]
+    count: usize,
+    /// Show context of matches
+    #[arg(short, long)]
+    context: bool,
+    // a hex input
+    #[arg(value_parser = parse_hex)]
+    hex_val: usize,
+}
+
+fn parse_hex(arg: &str) -> Result<usize> {
+    Ok(usize::from_str_radix(arg, 16)?)
+}
+```

@@ -108,7 +108,7 @@ pop  {r2}    @ (ldr r2, [sp], #4)
 ## References
 
 - Instruction Set
-    - [[arm_iso_1.pdf]]
-    - [[arm_iso_2.pdf]]
+    - [[arm_iso_1.pdf]] [web](https://iitd-plos.github.io/col718/ref/arm-instructionset.pdf)
+    - [[arm_iso_2.pdf]] [web](https://profile.iiita.ac.in/bibhas.ghoshal/COA_2021/lecture_slides/arm_inst.pdf)
 - [Immediate rotation](https://alisdair.mcdiarmid.org/arm-immediate-value-encoding/)
 - [CPSR Register](https://developer.arm.com/documentation/ddi0601/2023-12/AArch32-Registers/CPSR--Current-Program-Status-Register)
