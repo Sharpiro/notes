@@ -46,3 +46,7 @@ finally
     // never gets hit because error occurred in sibling catch
 }
 ```
+
+## Streams
+
+- Use `ToArray()` to convert the stream to a buffer, `GetBuffer()` will return the underlying buffer which can be much larger and filled with 0s
