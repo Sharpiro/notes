@@ -30,14 +30,9 @@ println!("{:02X?}", b"AZaz\0")
 println!("{:#04X?}", b"AZaz\0");
 ```
 
-## useful crates
-
-- `extend` - less boilerplate for extension methods
-- `enum-as-inner` - get an enum variant as an `Option<T>` or `Result<T>`, etc.
-
 ## Clap
 
-### Example Args
+### Args Example
 
 ```rust
 #[derive(Parser, Debug)]
@@ -62,6 +57,33 @@ struct Args {
 
 fn parse_hex(arg: &str) -> Result<usize> {
     Ok(usize::from_str_radix(arg, 16)?)
+}
+```
+
+### Subcommand Example
+
+```rust
+#[derive(Parser)]
+#[command(version, about, long_about = None)]
+#[command(propagate_version = true)]
+struct Cli {
+    /// Path to rom file
+    #[arg(long)]
+    rom: String,
+    #[command(subcommand)]
+    command: Commands,
+}
+
+#[derive(Subcommand)]
+enum Commands {
+    /// Dumps Rom Info
+    Dump {
+        /// Temp arg
+        #[arg(long)]
+        temp: Option<String>,
+    },
+    /// Analyzes Rom
+    Analyze,
 }
 ```
 
@@ -116,3 +138,20 @@ fn main() {
         .expect("error while running tauri application");
 }
 ```
+
+## Build file - `build.rs`
+
+- Caching
+    - `println!("cargo:rerun-if-changed=build.rs");`
+    - Speeds up build so `build.rs` only re-runs if file changed
+- Logging
+    - `println!("cargo:warning={x:?}");`
+
+## Crates
+
+- `extend` - less boilerplate for extension methods
+- `enum-as-inner` - get an enum variant as an `Option<T>` or `Result<T>`, etc.
+- `enum-dispatch`
+- `num-enum`
+- `strum`
+    - macros for string/enum conversion

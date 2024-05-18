@@ -14,9 +14,9 @@ Categories=GNOME;System;
 StartupNotify=false
 ```
 
-## disable `binfmt_misc` auto runners
+## Disable `binfmt_misc` program auto runners
 
-- not permanent
+Not permanent
 
 ```sh
 # enable/disable binfmt_misc for all apps
@@ -28,7 +28,7 @@ echo -1 | sudo tee /proc/sys/fs/binfmt_misc/windows
 echo -1 | sudo tee /proc/sys/fs/binfmt_misc/windowsPE
 ```
 
-- permanent
+Permanent
 
 ```sh
 # /usr/lib/binfmt.d/wine.conf
@@ -44,3 +44,14 @@ echo -1 | sudo tee /proc/sys/fs/binfmt_misc/windowsPE
     - `sudo apt install linux-perf`
 - rust install 'triple'
     - `armv7-unknown-linux-gnueabihf`
+
+## direnv
+
+- `XDG_CONFIG_HOME` by default equals `~/.config`
+
+```sh
+# ~/.config/direnv/direnv.toml
+
+[whitelist]
+exact = [ "~/src/project/.envrc", "/home/user/project-b/subdir-a" ]
+```
