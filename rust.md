@@ -1,3 +1,9 @@
+## Lifetimes
+
+- `-> impl FnMut(&[u8]) -> NomResult<usize> + '_`
+    - The closure should borrow any referenced data for the shortest possible lifetime
+    - This often ties the closure's lifetime to the lifetime of the inputs it captures by reference
+
 ## serde
 
 ### conversion from string
@@ -147,11 +153,21 @@ fn main() {
 - Logging
     - `println!("cargo:warning={x:?}");`
 
+## Nom
+
+- Usually use imports from `nom::bytes::complete` instead of `nom::complete`
+
+### Parsers
+
+- `take`: take a certain number of bytes
+
 ## Crates
 
 - `extend` - less boilerplate for extension methods
 - `enum-as-inner` - get an enum variant as an `Option<T>` or `Result<T>`, etc.
 - `enum-dispatch`
+    - allows an enum to auto-implement a trait if all variants implement that trait
 - `num-enum`
-- `strum`
-    - macros for string/enum conversion
+- `strum` - macros for string/enum conversion
+- `const_format` - formatting strings at compile-time
+- `static_assertions` - static/const assertions
