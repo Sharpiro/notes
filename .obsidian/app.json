@@ -2,7 +2,7 @@
   "vimMode": false,
   "useTab": false,
   "tabSize": 4,
-  "showInlineTitle": true,
+  "showInlineTitle": false,
   "showLineNumber": true,
   "alwaysUpdateLinks": true
 }

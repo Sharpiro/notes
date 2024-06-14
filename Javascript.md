@@ -85,3 +85,7 @@ type PickProps<T> = Pick<
   }[keyof T]
 >;
 ```
+
+## Testing
+
+- `vitetest` works well with `vite` projects without having to deal with `babel`, `typescript`, `jest`, etc.

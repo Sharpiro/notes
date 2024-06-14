@@ -1,6 +1,4 @@
-## DVD-Audio
-
-- [DVD-Audio](https://en.wikipedia.org/wiki/DVD-Audio) is an alternative standard to DVD Video for playing more/higher quality audio files
+# Authoring
 
 ## Tools
 
@@ -26,6 +24,10 @@
     - not tested
 - `imagination`
     - slide show
+
+## DVD-Audio
+
+- [DVD-Audio](https://en.wikipedia.org/wiki/DVD-Audio) is an alternative standard to DVD Video for playing more/higher quality audio files
 
 ## Examples
 

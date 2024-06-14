@@ -161,13 +161,19 @@ fn main() {
 
 - `take`: take a certain number of bytes
 
+## Unsafe Rust
+
+- Always check null pointers before passing them to unsafe functions
+
 ## Crates
 
 - `extend` - less boilerplate for extension methods
 - `enum-as-inner` - get an enum variant as an `Option<T>` or `Result<T>`, etc.
 - `enum-dispatch`
     - allows an enum to auto-implement a trait if all variants implement that trait
-- `num-enum`
+- `num-enum` - number/enum conversion
 - `strum` - macros for string/enum conversion
 - `const_format` - formatting strings at compile-time
 - `static_assertions` - static/const assertions
+- `bindgen` - create rust bindings from c
+- `cbindgen` - create c/c++ bindings from rust
