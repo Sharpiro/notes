@@ -13,7 +13,8 @@
 > This is for reference only as every device can be different.
 
 Setup your drive in "Libre" mode to allow it to circumvent firmware restrictions.
-This process *allegedly* can flash an encrypted firmware, the end result being the drive no longer has encrypted firmware and can be used unlocked.
+
+I'm still not sure, but as far as I know, after flashing the modded firmware in encrypted form, the drive *may* no longer have encrypted firmware installed, and can then be flashed with any firmware.
 
 - Find a compatible drive that is Libre-capable
 - Download [All You Need Firmware Pack (MartyMcNuts)](https://forum.makemkv.com/forum/viewtopic.php?t=22896)
