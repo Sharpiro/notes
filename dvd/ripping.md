@@ -11,6 +11,7 @@
 
 > [!warning] 
 > This is for reference only as every device can be different.
+> Tested on MakeMKV v1.17.7 / SDFtool Flasher v1.3.5
 
 Setup your drive in "Libre" mode to allow it to circumvent firmware restrictions.
 
@@ -21,7 +22,7 @@ I'm still not sure, but as far as I know, after flashing the modded firmware in 
 - List drives
     - `sdftool --list`
 - Get drive info
-    - `sdftool --drive /dev/<drive> --info`
+    - `sdftool --drive <drive> --info`
 - Dump drive firmware as backup
     - `sdftool --drive <drive> dump auto -o ./firmware_dumps`
 - Encrypt modded firmware and flash
