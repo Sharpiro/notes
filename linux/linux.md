@@ -1,3 +1,5 @@
+# Linux
+
 ## desktop shortcut
 
 ```sh
@@ -54,4 +56,32 @@ Permanent
 
 [whitelist]
 exact = [ "~/src/project/.envrc", "/home/user/project-b/subdir-a" ]
+```
+
+## Extend Luks Partition
+
+[source](https://unix.stackexchange.com/a/322631)
+
+```sh
+# open crypt
+crytsetup open /dev/sda2 crypt
+# resize partition
+parted /dev/sda
+    resizepart 2 800GB
+#resize crypt
+cryptsetup resize /dev/mapper/crypt
+# resize physical volume so logical volumes can extend
+pvresize /dev/mapper/crypt
+# resize home logical volume to 90% of free space
+lvresize -l+90%FREE /dev/fedora_localhost-live/home
+# force checking of file system, required before fs resize
+e2fsck -f /dev/mapper/fedora_localhost--live-home
+# extend filesystem to available space
+resize2fs /dev/mapper/fedora_localhost--live-home
+# resize root logical volume to 100% of free space
+lvresize -l+100%FREE /dev/fedora_localhost-live/root
+# force checking of file system, required before fs resize
+e2fsck -f /dev/mapper/fedora_localhost--live-root
+# extend filesystem to available space
+resize2fs /dev/mapper/fedora_localhost--live-root
 ```
