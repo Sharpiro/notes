@@ -177,3 +177,5 @@ fn main() {
 - `static_assertions` - static/const assertions
 - `bindgen` - create rust bindings from c
 - `cbindgen` - create c/c++ bindings from rust
+- `inotify` - low level Linux fs events
+- `notify` - Cross platform fs events

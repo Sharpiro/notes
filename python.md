@@ -33,3 +33,17 @@ try:
 except (BrokenPipeError, KeyboardInterrupt):
     sys.stdout = None
 ```
+
+## C-types
+
+- `byref`
+    - useful for simple pointer-like passing of data
+- `pointer`
+    - useful when you need the power of a full pointer
+- `c_char_p`
+    - `char*`
+- `w_char_p`
+    - `wchar_t*`
+- `windll`
+    - access windows API functions
+    - e.g. `windll.kernel32.GetCurrentProcessId`

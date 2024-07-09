@@ -93,3 +93,16 @@ add-symbol-file ./test_program_c_linux/test.exe 0x401000
 ```sh
 watch $sp
 ```
+
+## Tracing
+
+- `strace` - trace syscall
+    - Make `read` show buffer pointer instead of data
+        - `strace -e raw=read`
+- `ltrace`: trace library/function calls
+    - can pass a config file with `-F` to modify function declarations
+    - E.g. make `read` show buffer pointer instead of data
+        - `int read(int, void *, ulong);`
+- Disable `ASLR`
+    - easier to trace when addresses aren't changing
+    - `setarch $(uname -m) -R ltrace ...`
