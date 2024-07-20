@@ -104,6 +104,21 @@ AllowShortLambdasOnASingleLine: None
 
 ## .clangd
 
+### Building
+
+```sh
+git clone --depth 1 https://github.com/llvm/llvm-project.git
+mkdir llvm-project/build
+cd llvm-project/build
+cmake -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" -DLLVM_TARGETS_TO_BUILD="ARM" -DLLVM_DEFAULT_TARGET_TRIPLE="arm-linux-gnueabihf" ../llvm
+make -j6
+```
+
+- `LLVM_DEFAULT_TARGET_TRIPLE`
+    - without it arm32 clang will require specifying a target every time
+
+### Configuration
+
 ```json
 // vscode settings.json
 "clangd.fallbackFlags": ["-Wall"],

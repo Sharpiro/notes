@@ -106,3 +106,29 @@ watch $sp
 - Disable `ASLR`
     - easier to trace when addresses aren't changing
     - `setarch $(uname -m) -R ltrace ...`
+
+## Better array printing
+
+```sh
+# p/x *arr@5
+set print array-indexes off
+```
+
+## Shared Lib of Symbol
+
+```sh
+info symbol $pc
+info line *$pc
+```
+
+## Arm32 display bug
+
+```asm
+.global _start
+
+_start:
+    // gdb sees: tst	r10, #204, 22	@ 0x33000
+    mov r3, #0xabcc
+    // uncomment this to fix
+    // movw r3, #0xabcc
+```

@@ -179,3 +179,6 @@ fn main() {
 - `cbindgen` - create c/c++ bindings from rust
 - `inotify` - low level Linux fs events
 - `notify` - Cross platform fs events
+- regex
+    - [regex](https://crates.io/crates/regex)
+    - [fancy-regex](https://crates.io/crates/fancy-regex) - Supports slower features like backreferences and look-arounds

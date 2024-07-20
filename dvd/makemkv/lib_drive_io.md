@@ -36,16 +36,18 @@
     - Read `sdf.bin`
     - Hash `sdf[:-0x230]` hash
         - Unknown where validation hash is stored
+    - `base_key1 = [0] * 16`
     - Decrypt initial 4176 byte `chunk1`
         - get firmware platform string `platform = 'mtk:19:'`
-    - Try to find a key by hashing smaller portions of:
+    - Try to find `base_key2` by hashing smaller portions of:
         - `auto = sha1("auto")[:15]`
-        - `key1 = sha1([\x00|\x01]<auto><platform><device_info[:x]>)`
-        - in my case `key1` starts with `\x01`
+        - `base_key2 = sha1([\x00|\x01]<auto><platform><device_info[:x]>)`
+            - in my case starts with `\x01`
         - Unclear why it does so many, but it ends up using `x = 22` which is only the `platform`
     - Unknown how `chunk2_key_enc` is located
-    - Use `key1` to decrypt `chunk2_key`
-    - Decrypt `chunk2` key `key2`
+    - Decrypt `chunk2_key` with `base_key2`
+    - Decrypt `chunk2` key `chunk2_key`
+    - In order to decompress some chunks, prior chunk buffers are required as input
 
 ## Glossary
 
