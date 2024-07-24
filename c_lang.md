@@ -98,8 +98,10 @@ test_program.c
 
 ```yml
 BasedOnStyle: LLVM
+IndentWidth: 4
 AllowShortFunctionsOnASingleLine: None
 AllowShortLambdasOnASingleLine: None
+KeepEmptyLinesAtTheStartOfBlocks: false
 ```
 
 ## .clangd
@@ -261,4 +263,16 @@ gcc -c -o file1.o file1.c
 ar rcs libmystatic.a file1.o file2.o
 # use static lib
 gcc -o temp temp.c libmystatic.a
+```
+
+## Building GCC
+
+```sh
+git clone --depth 1 --branch releases/gcc-14.1.0 git://gcc.gnu.org/git/gcc.git
+cd gcc
+mkdir build
+cd build
+../configure --prefix=/opt/gcc-11.2 --enable-languages=c,c++ --disable-multilib --enable-checking=release
+make -j6
+sudo make install
 ```
