@@ -15,11 +15,6 @@ app_PreferredLanguage = "eng"
 - @todo: forced subs
     - tested this with hulk, forced subs worked but seemed like they were burned in
 - @todo: pull image art into mkv
-## Info
-
-```sh
-makemkvcon info --minlength=5400 file:$HOME/makemkv_dump/my_movie/backup
-```
 
 ## Backup DVD
 
@@ -28,6 +23,12 @@ makemkvcon backup --decrypt --cache=128 --noscan -r --progress=-same disc:0 $HOM
 ```
 
 - @todo: way too many logs
+## Info
+
+```sh
+makemkvcon info --minlength=5400 file:$HOME/makemkv_dump/my_movie/backup
+```
+
 ## Create MKV
 
 ```sh

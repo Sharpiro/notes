@@ -26,6 +26,8 @@ set disassembly-flavor intel
 break *0xaddress
 ```
 
+- gdb can become unstable if you set breakpoints on memory that is re-mapped
+    - e.g. `b _start` and then that symbol is unloaded
 ## watch address as string
 
 ```sh

@@ -106,19 +106,6 @@ KeepEmptyLinesAtTheStartOfBlocks: false
 
 ## .clangd
 
-### Building
-
-```sh
-git clone --depth 1 https://github.com/llvm/llvm-project.git
-mkdir llvm-project/build
-cd llvm-project/build
-cmake -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" -DLLVM_TARGETS_TO_BUILD="ARM" -DLLVM_DEFAULT_TARGET_TRIPLE="arm-linux-gnueabihf" ../llvm
-make -j6
-```
-
-- `LLVM_DEFAULT_TARGET_TRIPLE`
-    - without it arm32 clang will require specifying a target every time
-
 ### Configuration
 
 ```json
@@ -139,6 +126,9 @@ CompileFlags:
     - -Wextra
 ```
 
+- `-xc`
+    - forced clangd to treat files as `C`
+    - This seems unnecessary until you manually specify `-std`
 ## simulating closures
 
 - a [[cpp#lambda|closure]] can be simulated using structured and pointers
@@ -265,14 +255,56 @@ ar rcs libmystatic.a file1.o file2.o
 gcc -o temp temp.c libmystatic.a
 ```
 
+## Building Clang
+
+### Prerequisites
+
+```sh
+sudo apt install cmake
+```
+
+### Build
+
+```sh
+git clone --depth 1 https://github.com/llvm/llvm-project.git
+mkdir llvm-project/build
+cd llvm-project/build
+time CC=/opt/gcc-14.1.0/bin/gcc CXX=/opt/gcc-14.1.0/bin/g++ cmake -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/clang-trunk -DLLVM_TARGETS_TO_BUILD="ARM;AArch64" -DLLVM_DEFAULT_TARGET_TRIPLE="arm-linux-gnueabihf" -DLLVM_HOST_TRIPLE=arm-linux-gnueabihf ../llvm
+make -j6
+```
+
+- `DLLVM_HOST_TRIPLE`
+    - Most important triple when ambiguous like arm32
+- `LLVM_DEFAULT_TARGET_TRIPLE`
+    - may not be needed when `DLLVM_HOST_TRIPLE` is set
+    - without it arm32 clang will require specifying a target every time
+    - not required otherwise
+- `--gcc-install-dir`
+    - clang executable option to specify gcc install
+
 ## Building GCC
+
+### Prerequisites
+
+- try downloading prerequisites via `./contrib/download_prerequisites`
+
+#### Raspbian
+
+```sh
+sudo apt install build-essential libgmp-dev32 libmpfr-dev libmpc-dev flex
+```
+
+### Build
 
 ```sh
 git clone --depth 1 --branch releases/gcc-14.1.0 git://gcc.gnu.org/git/gcc.git
-cd gcc
-mkdir build
-cd build
-../configure --prefix=/opt/gcc-11.2 --enable-languages=c,c++ --disable-multilib --enable-checking=release
+mkdir gcc/build
+cd gcc/build
+../configure --build=arm-linux-gnueabihf --host=arm-linux-gnueabihf --prefix=/opt/gcc-14.1.0 --enable-languages=c,c++ --disable-multilib --enable-checking=release
 make -j6
 sudo make install
 ```
+
+- `--build` required for arm32 since it doesn't detect correctly
+    - unclear if `host` is also needed with this specified
+- `--host` required for arm32 since it doesn't detect correctly
