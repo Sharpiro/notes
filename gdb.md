@@ -134,3 +134,9 @@ _start:
     // uncomment this to fix
     // movw r3, #0xabcc
 ```
+
+## Builtin functions
+
+```sh
+`$_strlen(str)`
+```

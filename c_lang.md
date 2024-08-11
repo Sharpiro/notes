@@ -99,9 +99,16 @@ test_program.c
 ```yml
 BasedOnStyle: LLVM
 IndentWidth: 4
+ContinuationIndentWidth: 4
 AllowShortFunctionsOnASingleLine: None
 AllowShortLambdasOnASingleLine: None
 KeepEmptyLinesAtTheStartOfBlocks: false
+
+AlignAfterOpenBracket: BlockIndent
+BinPackParameters: false
+BinPackArguments: false
+AllowAllParametersOfDeclarationOnNextLine: true
+PenaltyReturnTypeOnItsOwnLine: 1000000
 ```
 
 ## .clangd
@@ -266,19 +273,17 @@ sudo apt install cmake
 ### Build
 
 ```sh
-git clone --depth 1 https://github.com/llvm/llvm-project.git
+git clone --depth 1 --branch release/19.x https://github.com/llvm/llvm-project.git
 mkdir llvm-project/build
 cd llvm-project/build
-time CC=/opt/gcc-14.1.0/bin/gcc CXX=/opt/gcc-14.1.0/bin/g++ cmake -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/clang-trunk -DLLVM_TARGETS_TO_BUILD="ARM;AArch64" -DLLVM_DEFAULT_TARGET_TRIPLE="arm-linux-gnueabihf" -DLLVM_HOST_TRIPLE=arm-linux-gnueabihf ../llvm
-make -j6
+time CC=/opt/gcc-14.1.0/bin/gcc CXX=/opt/gcc-14.1.0/bin/g++ cmake -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;lldb;polly;compiler-rt" -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/clang-19.x -DLLVM_TARGETS_TO_BUILD="ARM;AArch64" -DLLVM_HOST_TRIPLE=arm-linux-gnueabihf ../llvm
+time make -j6
 ```
 
 - `DLLVM_HOST_TRIPLE`
     - Most important triple when ambiguous like arm32
 - `LLVM_DEFAULT_TARGET_TRIPLE`
-    - may not be needed when `DLLVM_HOST_TRIPLE` is set
-    - without it arm32 clang will require specifying a target every time
-    - not required otherwise
+    - Not needed when `DLLVM_HOST_TRIPLE` is set
 - `--gcc-install-dir`
     - clang executable option to specify gcc install
 
