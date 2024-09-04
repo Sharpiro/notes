@@ -19,20 +19,33 @@ app_PreferredLanguage = "eng"
 ## Backup DVD
 
 ```sh
-makemkvcon backup --decrypt --cache=128 --noscan -r --progress=-same disc:0 $HOME/makemkv_dump/my_movie/backup
+makemkvcon backup \
+    --decrypt \
+    --cache=128 \
+    --noscan \
+    -r \
+    --progress=-same \
+    disc:0 \
+    ./backup
 ```
 
 - @todo: way too many logs
 ## Info
 
 ```sh
-makemkvcon info --minlength=5400 file:$HOME/makemkv_dump/my_movie/backup
+makemkvcon info \
+    --minlength=5400 \
+    file:backup
 ```
 
 ## Create MKV
 
 ```sh
-makemkvcon mkv --minlength=5400 file:$HOME/makemkv_dump/my_movie/backup all $HOME/makemkv_dump/my_movie/mkv
+makemkvcon mkv \
+    --minlength=5400 \
+    file:backup \
+    all \
+    mkv
 ```
 
 ## References

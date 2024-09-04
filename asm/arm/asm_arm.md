@@ -90,8 +90,10 @@ pop  {r2}    @ (ldr r2, [sp], #4)
 ## Branching
 
 - `b` - branch to given address
-- `bx` - branch to given register, optionally switch b/w arm/thumb
 - `bl` - set `lr` to next instruction then branch to given address
+    - `bl 0x1000`
+- `bx` - branch to given register, optionally switch b/w arm/thumb
+    - `bx lr`
 
 ### Misc
 

@@ -104,11 +104,15 @@ AllowShortFunctionsOnASingleLine: None
 AllowShortLambdasOnASingleLine: None
 KeepEmptyLinesAtTheStartOfBlocks: false
 
+# function alignment
 AlignAfterOpenBracket: BlockIndent
 BinPackParameters: false
 BinPackArguments: false
 AllowAllParametersOfDeclarationOnNextLine: true
 PenaltyReturnTypeOnItsOwnLine: 1000000
+
+# ternary expressions
+AlignOperands: false
 ```
 
 ## .clangd
@@ -276,14 +280,17 @@ sudo apt install cmake
 git clone --depth 1 --branch release/19.x https://github.com/llvm/llvm-project.git
 mkdir llvm-project/build
 cd llvm-project/build
-time CC=/opt/gcc-14.1.0/bin/gcc CXX=/opt/gcc-14.1.0/bin/g++ cmake -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;lldb;polly;compiler-rt" -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/clang-19.x -DLLVM_TARGETS_TO_BUILD="ARM;AArch64" -DLLVM_HOST_TRIPLE=arm-linux-gnueabihf ../llvm
+time CC=/opt/gcc-14.1.0/bin/gcc CXX=/opt/gcc-14.1.0/bin/g++ cmake -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld;lldb;polly;compiler-rt" -DLLVM_ENABLE_RUNTIMES="all" -DCMAKE_BUILD_TYPE="Release" -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="/opt/clang-19.x" -DLLVM_TARGETS_TO_BUILD="ARM;AArch64" -DLLVM_HOST_TRIPLE="arm-linux-gnueabihf" ../llvm
 time make -j6
+sudo make install
 ```
 
 - `DLLVM_HOST_TRIPLE`
     - Most important triple when ambiguous like arm32
 - `LLVM_DEFAULT_TARGET_TRIPLE`
     - Not needed when `DLLVM_HOST_TRIPLE` is set
+- `DLLVM_ENABLE_RUNTIMES`
+    - required for `compiler-rt` sanitizers
 - `--gcc-install-dir`
     - clang executable option to specify gcc install
 
@@ -305,11 +312,39 @@ sudo apt install build-essential libgmp-dev32 libmpfr-dev libmpc-dev flex
 git clone --depth 1 --branch releases/gcc-14.1.0 git://gcc.gnu.org/git/gcc.git
 mkdir gcc/build
 cd gcc/build
-../configure --build=arm-linux-gnueabihf --host=arm-linux-gnueabihf --prefix=/opt/gcc-14.1.0 --enable-languages=c,c++ --disable-multilib --enable-checking=release
-make -j6
+../configure \
+    --build=arm-linux-gnueabihf \
+    --host=arm-linux-gnueabihf \
+    --prefix=/opt/gcc-14.1.0 \
+    --enable-languages=c,c++ \
+    --disable-multilib \
+    --enable-checking=release
+time make -j6
 sudo make install
 ```
 
 - `--build` required for arm32 since it doesn't detect correctly
     - unclear if `host` is also needed with this specified
 - `--host` required for arm32 since it doesn't detect correctly
+
+## Qemu
+
+- `qemu-user`
+- `gcc-arm-linux-gnueabihf` arm toolchain/sysroot
+- `gdb-multiarch`
+
+### Compiling
+
+#### Prerequisites
+
+- `libglib2.0-dev bison ninja-build python3-pip`
+### Build
+
+```sh
+mkdir build
+cd build
+../configure \
+    --prefix=/opt/qemu-8.2.2 \
+    --disable-werror
+time make -j6
+```

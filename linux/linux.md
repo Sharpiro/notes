@@ -18,7 +18,9 @@ StartupNotify=false
 
 ## Disable `binfmt_misc` program auto runners
 
-Not permanent
+- Somehow works through `docker`, maybe via your shell
+
+### Status and Temporary Change
 
 ```sh
 # enable/disable binfmt_misc for all apps
@@ -30,7 +32,7 @@ echo -1 | sudo tee /proc/sys/fs/binfmt_misc/windows
 echo -1 | sudo tee /proc/sys/fs/binfmt_misc/windowsPE
 ```
 
-Permanent
+### Permanent
 
 ```sh
 # /usr/lib/binfmt.d/wine.conf

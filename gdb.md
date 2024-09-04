@@ -1,12 +1,29 @@
 ## install from source
 
+### Prerequisites
+
+- `python3-dev`
+- `texinfo bison`
+    - required due to a bug when using git sources (non-tarball)
+
 ```sh
-sudo apt install python3-dev
-./configure --with-python
-make
+git clone --depth 1 --branch gdb-15-branch https://github.com/bminor/binutils-gdb.git
+mkdir binutils-gdb/build
+cd binutils-gdb.git/build
+./configure \
+    --prefix=/opt/gdb-15.x \
+    --with-python \
+    --enable-targets=x86_64-linux-gnu,arm-linux-gnueabihf \
+    --target="arm-linux-gnueabihf" \
+    --build="arm-linux-gnueabihf" \
+    --host="arm-linux-gnueabihf"
+time make -j6
 sudo make install
 ```
 
+- `--enable-targets`
+    - enables cross debugging like in `gdb-multiarch`
+    - still requires a gdb server for alternative architectures
 - additional Raspbian/RPiOS steps
     - install `libgmp-dev`
     - install `libmpfr-dev`
@@ -70,7 +87,11 @@ return names + ["fs_base", "gs_base", "orig_rax"]
 - `handle all nostop noprint pass`
     - don't stop, don't print, pass to inferior
 
-## run command when breakpoint hit
+## Run command when breakpoint hit
+
+### Hook-Stop
+
+- runs commands on every breakpoint
 
 ```sh
 define hook-stop
@@ -79,6 +100,20 @@ define hook-stop
         continue
     end
 end
+```
+
+### Breakpoint Commands
+
+- runs commands on specific breakpoint
+
+```sh
+b run_asm
+    commands
+        b main
+        echo "if only I could continue..."
+        sleep 1
+        continue
+    end
 ```
 
 ## dynamically add symbol file
@@ -138,5 +173,22 @@ _start:
 ## Builtin functions
 
 ```sh
-`$_strlen(str)`
+`$_strlen(str)` # get length of string
+```
+
+## Breakpoint in Source
+
+```c
+# arm32, usually infinite loops in gdb
+__asm__("bkpt #0");
+
+# generic, crashes program
+__builtin_trap();
+```
+
+## Break on Syscalls
+
+```sh
+# breaks right before mmap2 is executed
+catch syscall mmap2
 ```
