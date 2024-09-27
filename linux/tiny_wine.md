@@ -21,3 +21,6 @@
     - can specify options to force PIE/no-PIE
 - `$fp` is incorrectly showing `$sp` in gdb after jumping to inferior
 - custom `malloc` functions must handle address alignment or you will receive `bus error`
+- `qemu` was loading the loader's `rw` memory at the same point where I was mapping shared libraries, causing bus errors and segmentation faults due to memory corruption
+    - Using hard-coded `0x500000` for now
+    - Would be nice to detect what is in use prior

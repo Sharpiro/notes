@@ -1,3 +1,7 @@
+## General
+
+- Shared libraries have their own relocations and global offset tables as well
+- Only exported functions will have relocations
 ## Syscalls
 
 - `mmap2`
@@ -20,14 +24,26 @@
 - `.shstrtab` - section header string table
     - names for section headers
 
-## Dynamic Calling
+## Dynamic Loading
 
-### Calling `printf`
+- recursively map shared libraries into memory
+- compute runtime locations using memory region offset for:
+    - symbols
+    - relocations
+    - global offset table
+- set `.got` to call back into dynamic loader
+- set `.got` non-zero values with their memory region offset
+### Dynamic Variable Loading
 
-- Setup
-    - recursively map shared libraries into memory
-    - keep track of dynamic offsets and function locations
-    - setup `.got` lookups to call back into loader
+- loader
+    - for each variable relocation:
+        - resolve respective symbol
+        - update `.got` with symbol value
+
+### Dynamic Function Loading
+
+#### Calling `printf`
+
 - 1st call
     - call `printf@plt`
     - load `printf@got` address into `r12` from `.got`
