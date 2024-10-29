@@ -45,10 +45,10 @@ break *0xaddress
 
 - gdb can become unstable if you set breakpoints on memory that is re-mapped
     - e.g. `b _start` and then that symbol is unloaded
-## watch address as string
+## view address as string
 
 ```sh
-x/1bs 0xdeadbeef
+x/1s 0xdeadbeef
 ```
 
 ## list memory map
@@ -123,12 +123,14 @@ b run_asm
 add-symbol-file ./test_program_c_linux/test.exe 0x401000
 ```
 
-## register watchpoint
+## register and memory watchpoint
 
-- break whenever register changes
+- break whenever register or memory changes
+- breaks **after** the change, and shows value before and after
 
 ```sh
 watch $sp
+watch *0xdeadbeef
 ```
 
 ## Tracing

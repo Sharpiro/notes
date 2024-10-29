@@ -165,6 +165,21 @@ fn main() {
 
 - Always check null pointers before passing them to unsafe functions
 
+## Logging
+
+- `tracing_subscriber`
+    - `env-filter`
+- `tracing`
+
+```rust
+    // export RUST_LOG=info,my_mod=trace
+    tracing_subscriber::fmt()
+        .with_env_filter(EnvFilter::from_default_env())
+        .with_target(false)
+        .without_time()
+        .init();
+```
+
 ## Crates
 
 - `extend` - less boilerplate for extension methods
@@ -182,3 +197,7 @@ fn main() {
 - regex
     - [regex](https://crates.io/crates/regex)
     - [fancy-regex](https://crates.io/crates/fancy-regex) - Supports slower features like backreferences and look-arounds
+- tracing/logging
+    - `tracing_subscriber`
+    - `tracing`
+- `indexmap` - `HashMap` and `HashSet` but they maintain their order
