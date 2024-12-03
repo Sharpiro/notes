@@ -107,13 +107,12 @@ end
 - runs commands on specific breakpoint
 
 ```sh
-b run_asm
-    commands
-        b main
-        echo "if only I could continue..."
-        sleep 1
-        continue
-    end
+b *run_asm+88
+commands
+b main
+add-symbol-file ./tinyfetch
+add-symbol-file ./libtinyc.so 0x5056b0 # address of .text start
+end
 ```
 
 ## dynamically add symbol file

@@ -348,3 +348,61 @@ cd build
     --disable-werror
 time make -j6
 ```
+
+## Field and Struct Alignment
+
+- struct alignment `==` largest field alignment
+- struct size is a multiple of its alignment
+- field offsets are aligned to their type alignment
+- alignment can only be equal to a primitive size
+- architecture does not *directly* affect size and alignment
+    - it affects pointer size, which indirectly affects it
+- inlining struct fields can change the size
+
+```python
+from typing import Any
+
+def parse_struct(struct: list[tuple[Any, str]], level: int) -> tuple[int, int]:
+    struct_size = 0
+    struct_align = 0
+    for field_type, field_name in struct:
+        field_size: int
+        field_alignment: int
+        if type(field_type) is int:
+            field_size = field_type
+            field_alignment = field_type
+        else:
+            [inner_struct_size, inner_struct_align] = parse_struct(
+                field_type, level + 1
+            )
+            field_size = inner_struct_size
+            field_alignment = inner_struct_align
+        field_padding = struct_size % field_alignment
+        field_offset = struct_size + field_padding
+        print(
+            f"level {level}: {field_offset} {field_size} {field_name}, {field_alignment}"
+        )
+        struct_size = field_offset + field_size
+        struct_align = max(struct_align, field_alignment)
+    struct_padding = struct_size % struct_align
+    struct_size += struct_padding
+    return (struct_size, struct_align)
+
+
+# One u64 in struct means padding in inner and outer struct
+input_sub: list[Any] = [
+    (4, "a"),
+    (8, "b"),
+]
+input: list[Any] = [
+    (4, "x"),
+    (input_sub, "y"),
+]
+output = parse_struct(input, 0)
+assert output == (24, 8)
+
+# Struct size must be multiple of its alignment
+input: list[Any] = [(8, "x"), (4, "y")]
+output = parse_struct(input, 0)
+assert output == (16, 8)
+```

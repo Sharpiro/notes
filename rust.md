@@ -201,3 +201,4 @@ fn main() {
     - `tracing_subscriber`
     - `tracing`
 - `indexmap` - `HashMap` and `HashSet` but they maintain their order
+- `zerocopy` - Safe C-like casting of buffers to struct pointers
