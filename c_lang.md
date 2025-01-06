@@ -142,7 +142,7 @@ CompileFlags:
     - This seems unnecessary until you manually specify `-std`
 ## simulating closures
 
-- a [[cpp#lambda|closure]] can be simulated using structured and pointers
+- a [[cpp#lambda|closure]] can be simulated using structures and pointers
 
 ```cpp
 void modify_with_closure(TestClosure *closure) {

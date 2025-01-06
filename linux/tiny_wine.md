@@ -1,6 +1,6 @@
 # Tiny Wine
 
-## Notes
+## Linux Notes
 
 - Discovered an interesting `gdb` `arm32` instruction display bug that threw me for a loop and lead me down all sorts of bad paths regarding how instructions are parsed
     - [[gdb#Arm32 display bug|Arm32 display bug]]
@@ -33,3 +33,18 @@
 - `.got` vs `.got.plt`
     - `arm32` has a `.got` section for global offset table, used by variables and functions
     - `amd64` uses `.got` for variables, but `.got.plt` for functions
+
+## Windows Notes
+
+- `ntdll.dll` seems to be an implicit dependency for all windows programs
+    - wine builds both a `ntdll.so` and `ntdll.dll`
+    - almost everything else seems to be built as a `dll`
+- Unlike Linux dynamic linking which uses the stack and/or registers to prepare for the linking function, windows just jumps to a function.  The only way I see how to get the linking information to the function is to create glue-code assembly dynamically for each function.
+    - The reason for this awkardness is because Windows by default handles the linking on program start, whereas linux defaults to linking on first function call
+- When calling from Windows to Linux, after dynamic linking a function once, subsequent calls still need glue-code to swap the calling convention
+    - It's simpler to just re-link the function every time since we would have to duplicate much of the original linking work.
+- Multiple types of dynamic linking need to be supported
+    - Windows -> Windows (msvcrt.dll)
+    - Windows -> Linux (ntdll.dll)
+    - Linux -> Linux (libntdll.so)
+    - Linux -> Windows ???
