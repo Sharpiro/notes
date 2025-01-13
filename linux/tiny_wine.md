@@ -33,6 +33,10 @@
 - `.got` vs `.got.plt`
     - `arm32` has a `.got` section for global offset table, used by variables and functions
     - `amd64` uses `.got` for variables, but `.got.plt` for functions
+- intermittent `malloc` memory bugs
+    - In the loader I'm using `mmap` for `malloc`
+    - In `tinyc`  I'm using `brk` for `malloc`
+    - Because `brk` returns a random address and my loader `mmap` uses a static address, `mmap` will overwrite the `brk` less than 1% of the time, causing `tinyc` `malloc` to fail later on
 
 ## Windows Notes
 
@@ -48,3 +52,6 @@
     - Windows -> Linux (ntdll.dll)
     - Linux -> Linux (libntdll.so)
     - Linux -> Windows ???
+- trampoline compiler-specific bug
+    - originally i was using the compiler to generate trampoline assembly for ease of use
+    - I had to convert this to creating the byte code manually b/c different compilers/versions were generating different assembly of different sizes
