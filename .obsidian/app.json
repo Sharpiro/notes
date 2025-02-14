@@ -4,5 +4,6 @@
   "tabSize": 4,
   "showInlineTitle": false,
   "showLineNumber": true,
-  "alwaysUpdateLinks": true
+  "alwaysUpdateLinks": true,
+  "showUnsupportedFiles": true
 }

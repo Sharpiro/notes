@@ -29,7 +29,7 @@ class RegionCommand(gdb.Command):
             search_address = int(arg, 16)
             info_proc_map_output = gdb.execute("info proc map", to_string = True)
             split_lines = [
-                re.sub("\s+", " ", l.strip()).split(" ")
+                re.sub(r"\s+", " ", l.strip()).split(" ")
                 for l in info_proc_map_output.split("\n")[4:-1]
             ]
             memory_regions = [
