@@ -55,3 +55,11 @@
 - trampoline compiler-specific bug
     - originally i was using the compiler to generate trampoline assembly for ease of use
     - I had to convert this to creating the byte code manually b/c different compilers/versions were generating different assembly of different sizes
+- `.bss` and `.data` initialization
+    - the entire `.bss` section can be set to `0`
+    - the `.data` section is just mapped into memory w/ no modification
+        - this explains why the PE format doesn't understand how large imported/exported variables are
+- possible clang linker target options
+    - `x86_64-w64-mingw32`
+    - `i686-w64-mingw32`
+    - `x86_64-w64-windows-gnu`

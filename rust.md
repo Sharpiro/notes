@@ -180,6 +180,14 @@ fn main() {
         .init();
 ```
 
+## Return temporary array from function
+
+```rust
+fn get_state(&self) -> &[u32] {
+    // state: u32
+    std::array::from_ref(&self.state)
+}
+```
 ## Crates
 
 - `extend` - less boilerplate for extension methods
@@ -198,7 +206,9 @@ fn main() {
     - [regex](https://crates.io/crates/regex)
     - [fancy-regex](https://crates.io/crates/fancy-regex) - Supports slower features like backreferences and look-arounds
 - tracing/logging
-    - `tracing_subscriber`
-    - `tracing`
+    - `tracing` + `tracing_subscriber`
 - `indexmap` - `HashMap` and `HashSet` but they maintain their order
 - `zerocopy` - Safe C-like casting of buffers to struct pointers
+- `bytemuck` - Similar to `zerocpy` but more focused on packing w/o padding
+- `num-format` - format commas
+- `pretty_hex`- pretty hex
