@@ -122,7 +122,7 @@ end
 add-symbol-file ./test_program_c_linux/test.exe 0x401000
 ```
 
-## register and memory watchpoint
+## register and memory watchpoint (hardware breakpoint)
 
 - break whenever register or memory changes
 - breaks **after** the change, and shows value before and after
