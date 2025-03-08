@@ -64,6 +64,11 @@
     - `i686-w64-mingw32`
     - `x86_64-w64-windows-gnu`
 - Thread-local storage
+    - Would be super easy if we could override `__tmainCRTStartup` function with our own, but for some reason, the linker duplicates our implementation rather than replacing it like it does with many of the other functions called in the runtime startup.
     - We need to 'initialize' thread-local storage.  But we don't actually want to support it, we just want to set it up enough so that the program doesn't crash before we reach our `main` function.  Because we're skipping some initialization code, undoubtedly some things will not work, but we just want some basic functionality.
     - We need to initialize the `gs` segment register to some address to avoid segfaults.  Right now i'm just going to give it the top of the winloader's stack.
     - Windows C standard library used an `initialized` variable to check if certain things have been initialized.  If we set it to `true` from the start we can skip some of the initialization code.
+        - `intialized` is checked in `__main`, so if we override that function in our own runtime, we can bypass checking `initialized` directly
+    - Also uses `.refptr.__imp__acmdln` which we an setup to bypass a good chunk of TLS initialization.
+        - only needed in docker version likely due to older Clang version
+        - can override `__p__acmdln` function instead

@@ -55,10 +55,19 @@ class RegionCommand(gdb.Command):
                 print_regions(memory_regions)
                 return
 
-            if not argument.startswith("0x"):
-                raise Exception("Expected hex address")
+            if not argument.startswith("0x") and not argument.startswith("$"):
+                raise Exception("Expected hex address or gdb variable")
 
-            search_address = int(argument, 16)
+            search_address: int
+            if argument.startswith("$"):
+                val = gdb.parse_and_eval(argument)
+                if val.type.code == gdb.TYPE_CODE_VOID:
+                    raise Exception(f"gdb variable '{argument}' not found")
+                search_address = int(val)
+            else:
+                search_address = int(argument, 16)
+
+            print(f"Address: {search_address:#x}")
             found_region: MemoryRegion | None = None
             for mr in memory_regions:
                 if search_address >= mr.start and search_address < mr.end:
@@ -68,7 +77,7 @@ class RegionCommand(gdb.Command):
             if found_region:
                 print_regions([found_region])
             else:
-                print("Not found")
+                print("Region not found")
         except Exception as e:
             print(e)
 

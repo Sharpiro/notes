@@ -181,7 +181,10 @@ _start:
 
 ```c
 # arm32, usually infinite loops in gdb
-__asm__("bkpt #0");
+__asm__("bkpt #0\n");
+
+# x64
+__asm__("int 3\n");
 
 # generic, crashes program
 __builtin_trap();
