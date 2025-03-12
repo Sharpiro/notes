@@ -44,7 +44,7 @@
     - wine builds both a `ntdll.so` and `ntdll.dll`
     - almost everything else seems to be built as a `dll`
 - Unlike Linux dynamic linking which uses the stack and/or registers to prepare for the linking function, windows just jumps to a function.  The only way I see how to get the linking information to the function is to create glue-code assembly dynamically for each function.
-    - The reason for this awkardness is because Windows by default handles the linking on program start, whereas linux defaults to linking on first function call
+    - The reason for this awkwardness is because Windows by default handles the linking on program start, whereas linux defaults to linking on first function call
 - When calling from Windows to Linux, after dynamic linking a function once, subsequent calls still need glue-code to swap the calling convention
     - It's simpler to just re-link the function every time since we would have to duplicate much of the original linking work.
 - Multiple types of dynamic linking need to be supported
@@ -69,6 +69,8 @@
     - We need to initialize the `gs` segment register to some address to avoid segfaults.  Right now i'm just going to give it the top of the winloader's stack.
     - Windows C standard library used an `initialized` variable to check if certain things have been initialized.  If we set it to `true` from the start we can skip some of the initialization code.
         - `intialized` is checked in `__main`, so if we override that function in our own runtime, we can bypass checking `initialized` directly
+        - After implementing more MS functions in `msvrt.dll` like `_onexit`, we stdlib's `__main` will return without error
     - Also uses `.refptr.__imp__acmdln` which we an setup to bypass a good chunk of TLS initialization.
         - only needed in docker version likely due to older Clang version
         - can override `__p__acmdln` function instead
+        - I was originally exporting `_acmdln` as a function, but if it is instead exported as `EXPORTABLE char *_acmdln`, `__p__acmdln` can also be removed
