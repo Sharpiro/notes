@@ -50,8 +50,8 @@
 - Multiple types of dynamic linking need to be supported
     - Windows -> Windows (msvcrt.dll)
     - Windows -> Linux (ntdll.dll)
+        - Linux -> Windows (returning to Windows)
     - Linux -> Linux (libntdll.so)
-    - Linux -> Windows ???
 - trampoline compiler-specific bug
     - originally i was using the compiler to generate trampoline assembly for ease of use
     - I had to convert this to creating the byte code manually b/c different compilers/versions were generating different assembly of different sizes
@@ -69,8 +69,10 @@
     - We need to initialize the `gs` segment register to some address to avoid segfaults.  Right now i'm just going to give it the top of the winloader's stack.
     - Windows C standard library used an `initialized` variable to check if certain things have been initialized.  If we set it to `true` from the start we can skip some of the initialization code.
         - `intialized` is checked in `__main`, so if we override that function in our own runtime, we can bypass checking `initialized` directly
-        - After implementing more MS functions in `msvrt.dll` like `_onexit`, we stdlib's `__main` will return without error
+        - After implementing more MS functions in `msvrt.dll` like `_onexit`, stdlib's `__main` will return without error
     - Also uses `.refptr.__imp__acmdln` which we an setup to bypass a good chunk of TLS initialization.
         - only needed in docker version likely due to older Clang version
         - can override `__p__acmdln` function instead
-        - I was originally exporting `_acmdln` as a function, but if it is instead exported as `EXPORTABLE char *_acmdln`, `__p__acmdln` can also be removed
+        - I was originally exporting `_acmdln` as a function, but if it is instead exported as `EXPORTABLE char *_acmdln = NULL`, `__p__acmdln` can also be removed
+- Structs vs variables with inline assembly
+    - When using "=m" in assmebly to output to C variables, only outputing to variables in the function worked, trying to output to fields of a struct variable in the function failed due to registers clobbering
