@@ -76,3 +76,12 @@
         - I was originally exporting `_acmdln` as a function, but if it is instead exported as `EXPORTABLE char *_acmdln = NULL`, `__p__acmdln` can also be removed
 - Structs vs variables with inline assembly
     - When using "=m" in assmebly to output to C variables, only outputing to variables in the function worked, trying to output to fields of a struct variable in the function failed due to registers clobbering
+- Stack is 16 byte aligned **before** a function call due to pushed return address
+    - At function call `stack_pointer % 16 == 0`
+    - At first function instruction `stack_pointer % 16 == 8`
+- `stdlib` setup
+    - `mainCRTStartup` (static)
+    - `__tmainCRTStartup` (static)
+    - `_initterm` (dynamic)
+    - `pre_cpp_init` (static)
+    - `__getmainargs` (dynamic)
