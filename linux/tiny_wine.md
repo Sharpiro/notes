@@ -37,6 +37,21 @@
     - In the loader I'm using `mmap` for `malloc`
     - In `tinyc`  I'm using `brk` for `malloc`
     - Because `brk` returns a random address and my loader `mmap` uses a static address, `mmap` will overwrite the `brk` less than 1% of the time, causing `tinyc` `malloc` to fail later on
+- Alignment
+    - Stack seems to be 16 byte aligned at function start, unlike windows
+- relocation types
+    - function
+        - supported
+            - R_X86_64_JUMP_SLOT
+    - variable
+        - supported
+            - R_X86_64_COPY
+            - R_X86_64_GLOB_DAT
+        - unsupported
+            - R_X86_64_RELATIVE
+                - file pointer to static var in file
+            - R_X86_64_64
+                - file pointer to non-static var in file
 
 ## Windows Notes
 
