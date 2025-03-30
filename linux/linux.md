@@ -87,3 +87,76 @@ e2fsck -f /dev/mapper/fedora_localhost--live-root
 # extend filesystem to available space
 resize2fs /dev/mapper/fedora_localhost--live-root
 ```
+
+## Gaming
+
+### Overview
+
+- **Proton**: Compatibility layer for running Windows games on Linux using Wine + DXVK + vkd3d-proton.
+- **DXVK**: Translates Direct3D 9/10/11 → Vulkan.
+- **vkd3d-proton**: Translates Direct3D 12 → Vulkan.
+- **WineD3D**: Translates all D3D versions (9–12) → OpenGL.
+- **Kepler GPUs** (like GTX 780) are too old for full DX12 support in Proton using Vulkan backends.
+
+### Debugging
+
+- opengl
+    - `glxgears -info`
+    - `glxinfo`
+- vulkan
+    - `vkcube`
+    - `vulkaninfo`
+    
+### Key Env Vars
+
+| Env Var                      | Purpose                                                                                                            |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `PROTON_USE_WINED3D=1`       | Force all D3D (including D3D12) → OpenGL via WineD3D (bypasses DXVK and vkd3d)                                     |
+| `DXVK_FORCE_D3D11=1`         | Forces a game that supports both D3D12 and D3D11 to use D3D11 with DXVK. Does nothing if game only supports D3D12. |
+| `VKD3D_CONFIG=virtual_heaps` | Enables emulated descriptor heaps in vkd3d-proton (for D3D12 → Vulkan, on older drivers)                           |
+| `PROTON_USE_DXVK=1`          | Explicitly enables DXVK (usually default)                                                                          |
+
+## Nvidia legacy 470xx driver
+
+### Concepts
+
+- **NVIDIA 470xx driver**: Legacy driver needed for older GPUs like GTX 780.
+- **Wayland vs Xorg**: Fedora 41 prefers Wayland, but 470xx only works reliably with Xorg.
+- **Secure Boot**: Blocks unsigned kernel modules like NVIDIA’s unless disabled or manually signed.
+- **akmod**: Builds kernel modules on demand (via `akmods`).
+- **mknod error**: NVIDIA device nodes weren’t being created, blocking GPU access.
+- **GDM**: GNOME Display Manager, defaults to Wayland unless configured otherwise.
+- **startx**: Manually starts an X session from the command line.
+    
+### Key Packages Installed
+
+```bash
+# Enable RPM Fusion repos
+sudo dnf install https://download1.rpmfusion.org/{free,nonfree}/fedora/rpmfusion-{free,nonfree}-release-$(rpm -E %fedora).noarch.rpm
+
+# Install NVIDIA 470xx driver
+sudo dnf install akmod-nvidia-470xx xorg-x11-drv-nvidia-470xx-cuda nvidia-modprobe-470xx
+
+# Install Xorg stack and session support
+sudo dnf install gnome-session-xsession xorg-x11-server-Xorg xorg-x11-xinit xterm
+```
+
+### Start Xorg manually (bypass GDM)
+
+Create an X session launcher:
+
+```bash
+echo 'exec gnome-session' > ~/.xinitrc
+startx
+```
+
+### Diagnostics Used
+
+```bash
+# Check if NVIDIA driver loaded
+lsmod | grep nvidia
+nvidia-smi
+
+# Read logs for crash reasons
+journalctl -b -r | grep -iE 'nvidia|xorg|gnome'
+```
