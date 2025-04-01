@@ -172,3 +172,5 @@ journalctl -b -r | grep -iE 'nvidia|xorg|gnome'
     - 24 px
 - ~~[TopIcons Plus](https://extensions.gnome.org/extension/1031/topicons/)~~ [AppIndicator](https://extensions.gnome.org/extension/615/appindicator-support/)
     - Adds tray icons for running applications to top bar
+- [No overview at start-up](https://extensions.gnome.org/extension/4099/no-overview/)
+    - Disable Fedora 41+ starting in overview state
