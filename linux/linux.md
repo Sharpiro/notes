@@ -160,3 +160,15 @@ nvidia-smi
 # Read logs for crash reasons
 journalctl -b -r | grep -iE 'nvidia|xorg|gnome'
 ```
+
+## Gnome Extensions
+
+- `gnome-tweaks`
+    - Additional settings for gnome
+- [Hide Top Bar](https://extensions.gnome.org/extension/545/hide-top-bar)
+    - hides the top bar when windows are maximized
+- [Dash to Dock](https://extensions.gnome.org/extension/307/dash-to-dock)
+    - moves dash to bottom of screen for a more windows like experience
+    - 24 px
+- ~~[TopIcons Plus](https://extensions.gnome.org/extension/1031/topicons/)~~ [AppIndicator](https://extensions.gnome.org/extension/615/appindicator-support/)
+    - Adds tray icons for running applications to top bar
