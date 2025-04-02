@@ -38,7 +38,12 @@
     - In `tinyc`  I'm using `brk` for `malloc`
     - Because `brk` returns a random address and my loader `mmap` uses a static address, `mmap` will overwrite the `brk` less than 1% of the time, causing `tinyc` `malloc` to fail later on
 - Alignment
-    - Stack seems to be 16 byte aligned at function start, unlike windows
+    - pre-main
+        - 16 byte aligned at start
+        - NOT 16 byte aligned at `call`
+    - post-main
+        - NOT 16 byte aligned at start
+        - 16 byte aligned at `call`
 - relocation types
     - function
         - supported
@@ -94,6 +99,13 @@
 - Stack is 16 byte aligned **before** a function call due to pushed return address
     - At function call `stack_pointer % 16 == 0`
     - At first function instruction `stack_pointer % 16 == 8`
+- Alignment
+    - pre-main
+        - NOT 16 byte aligned at start
+        - NOT 16 byte aligned at `call`
+    - post-main
+        - NOT 16 byte aligned at start
+        - 16 byte aligned at `call`
 - `stdlib` setup
     - `mainCRTStartup` (static)
     - `__tmainCRTStartup` (static)
