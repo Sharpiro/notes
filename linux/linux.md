@@ -132,7 +132,7 @@ resize2fs /dev/mapper/fedora_localhost--live-root
 - **GDM**: GNOME Display Manager, defaults to Wayland unless configured otherwise.
 - **startx**: Manually starts an X session from the command line.
     
-### Key Packages Installed
+### Setup
 
 ```bash
 # Enable RPM Fusion repos
@@ -143,6 +143,9 @@ sudo dnf install akmod-nvidia-470xx xorg-x11-drv-nvidia-470xx-cuda nvidia-modpro
 
 # Install Xorg stack and session support
 sudo dnf install gnome-session-xsession xorg-x11-server-Xorg xorg-x11-xinit xterm
+
+# May need to rebuild kernel modules after system update
+akmods --kernels $(uname -r)
 ```
 
 ### Start Xorg manually (bypass GDM)
