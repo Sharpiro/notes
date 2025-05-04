@@ -116,6 +116,10 @@ resize2fs /dev/mapper/fedora_localhost--live-root
 | `VKD3D_CONFIG=virtual_heaps` | Enables emulated descriptor heaps in vkd3d-proton (for D3D12 → Vulkan, on older drivers)                           |
 | `PROTON_USE_DXVK=1`          | Explicitly enables DXVK (usually default)                                                                          |
 
+### References
+
+- [xpadneo](https://github.com/atar-axis/xpadneo) - xbox series wireless controller support
+
 ## Nvidia legacy 470xx driver
 
 ### Concepts
