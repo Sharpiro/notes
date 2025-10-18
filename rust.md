@@ -200,6 +200,8 @@ fn get_state(&self) -> &[u32] {
 - `static_assertions` - static/const assertions
 - `bindgen` - create rust bindings from c
 - `cbindgen` - create c/c++ bindings from rust
+- `csbindgen` - c# bindings from  rust
+- `interoptopus` - multiple language bindings from  rust
 - `inotify` - low level Linux fs events
 - `notify` - Cross platform fs events
 - regex
@@ -210,5 +212,9 @@ fn get_state(&self) -> &[u32] {
 - `indexmap` - `HashMap` and `HashSet` but they maintain their order
 - `zerocopy` - Safe C-like casting of buffers to struct pointers
 - `bytemuck` - Similar to `zerocpy` but more focused on packing w/o padding
+- `byteorder` - multi-endian number parsing with cursors
+- `binrw` - unpacking into structs but without `repr(packed)`
 - `num-format` - format commas
 - `pretty_hex`- pretty hex
+- `pretty_assertionns` - pretty assertionns
+- `iter_tools` - helper methods like `collect_vec`

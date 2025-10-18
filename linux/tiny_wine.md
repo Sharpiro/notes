@@ -57,6 +57,13 @@
                 - file pointer to static var in file
             - R_X86_64_64
                 - file pointer to non-static var in file
+- Static vs Dynamic binaries
+    - `-nostdlib -static`
+        - `elf: Type: 2 - EXEC`
+        - `ldd: not a dynamic executable`
+    - `-nostdlib`
+        - `elf: Type: 3 - DYN - PIE`
+        - `ldd: statically linked`
 
 ## Windows Notes
 
@@ -112,3 +119,39 @@
     - `_initterm` (dynamic)
     - `pre_cpp_init` (static)
     - `__getmainargs` (dynamic)
+- 2025-08-24 Stack bug
+    - During the swap stack from Windows to Linux I was removing stack data for parameters 5 and 6.
+    - The problem is that only works if the function call has that many parameters, otherwise it's just overwriting used data on the stack.
+    - I didn't notice this b/c I had a 'proxy' function being called prior to the swap, which means it was likely overwriting space on the stack that wasn't being used again.
+
+| Address | Value | Description |
+| ------- | ----- | ----------- |
+| 0x00    | 0x00  | Shadow      |
+| 0x04    | 0x00  | Shadow      |
+| 0x08    | 0x00  | Shadow      |
+| 0x0c    | 0x00  | Shadow      |
+| 0x10    | 0x00  | Stack Data  |
+
+| Address | Value | Description |
+| ------- | ----- | ----------- |
+| 0x00    | 0x00  | Shadow      |
+| 0x04    | 0x00  | Shadow      |
+| 0x08    | 0x00  | Shadow      |
+| 0x0c    | 0x00  | Shadow      |
+| 0x10    | 0x00  | Parameter 5 |
+| 0x14    | 0x00  | Parameter 6 |
+| 0x18    | 0x00  | Parameter 7 |
+| 0x1c    | 0x00  | Parameter 8 |
+| 0x20    | 0x00  | Parameter 9 |
+| 0x24    | 0x00  | Stack Data  |
+
+| Address | Value | Description |
+| ------- | ----- | ----------- |
+| 0x00    | 0x00  | Parameter 7 |
+| 0x04    | 0x00  | Parameter 8 |
+| 0x08    | 0x00  | Parameter 9 |
+| 0x24    | 0x00  | Stack Data  |
+- 2025-09-01 `fopen` bug
+    - I couldn't figure out why in the middle of my buffer I had random bytes disspearing
+    - `fopen` with mode `r` on Linux is identical to `rb`
+    - `fopen` with mode `r` is text mode on Windows which translated `\r\n` into `\n`
