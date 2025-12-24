@@ -406,3 +406,15 @@ input: list[Any] = [(8, "x"), (4, "y")]
 output = parse_struct(input, 0)
 assert output == (16, 8)
 ```
+
+## Functions
+
+- `strcmp` - compare strings
+- `strcasecmp` - compare strings ignore case
+- `isspace` - check for whitespace
+- `strtok_r`
+    - split strings into tokens by delimiter
+    - thread-safe
+    - original string is modified
+- `strcpy` - copy string into buffer
+- `strdup` - allocate new copy of string

@@ -24,3 +24,7 @@
         - grass block is all green
     - [Default Dark Mode](https://github.com/nebuIr/Default-Dark-Mode)
         - dark mode UI elements
+
+## Custom Mod Ideas
+
+- abc
